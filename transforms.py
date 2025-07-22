@@ -12,7 +12,8 @@ from numpy import linalg as LA
 #import matplotlib.pyplot as plt
 #from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.decomposition import PCA
-import umap
+#import umap
+from umap import UMAP
 from sklearn.manifold import TSNE
 import pacmap
 
@@ -23,14 +24,14 @@ def get_embedding(X_train, method, **kwargs):
     if method.lower() == "pca":
         return pca(X_train)
     
-    else if method.lower() == "umap":
-        return umap(X_train, **kwargs)
+    elif method.lower() == "umap":
+        return use_umap(X_train, **kwargs)
 
-    else if method.lower() == "tsne":
+    elif method.lower() == "tsne":
         return tsne(X_train, **kwargs)
 
-    else if method.lower() == "pacmap":
-        return pacmap(X_train, **kwargs)
+    elif method.lower() == "pacmap":
+        return use_pacmap(X_train, **kwargs)
 
     else:
         return "Invalid transform."
@@ -43,8 +44,8 @@ def pca(X_train):
     return embedding
 
 
-def umap(X_train, **kwargs):
-    reducer = umap.UMAP(**kwargs) # default embedding dim is 2, num neighbors is 15
+def use_umap(X_train, **kwargs):
+    reducer = UMAP(**kwargs) # default embedding dim is 2, num neighbors is 15
     embedding = reducer.fit_transform(X_train)
     embedding = embedding / LA.norm(embedding)
     return embedding
@@ -56,8 +57,8 @@ def tsne(X_train, **kwargs):
     embedding = embedding / LA.norm(embedding)
     return embedding
 
-def pacmap(X_train, **kwargs):
+def use_pacmap(X_train, **kwargs):
     reducer = pacmap.PaCMAP(n_components=2)
-    X_transformed = embedding.fit_transform(X_train, init="pca") # default init is PCA
+    embedding = reducer.fit_transform(X_train, init="pca") # default init is PCA
     embedding = embedding / LA.norm(embedding)
     return embedding
