@@ -18,4 +18,4 @@ MNIST accessed thru scikit-learn.
 FMNIST accessed thru umap-learn.  
 
 ### Things you can probably ignore
-Anything with "df" in the title and a bunch of underscores is a dataframe with various results.
+Anything with "df" in the title and a bunch of underscores is a dataframe with various results. You don't need it to run UPCA.
